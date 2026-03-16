@@ -76,7 +76,7 @@ Route::get('/dashboard', function () {
 */
 
 
-
+/*
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
@@ -85,6 +85,18 @@ Route::middleware('auth')->group(function () {
 
 });
 
+*/
 
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', function () {
+        
+        return view('dashboard');
+    });
+
+});
+
+Route::get('/login',[AuthController::class,'showLogin'])->name('login');
 
 #####

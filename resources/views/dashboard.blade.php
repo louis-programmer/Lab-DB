@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome, {{ Auth::user()->name }}!</h2>
+<h1>Lab System Dashboard</h1>
 
-    <p>You are now logged in.</p>
+<p>Welcome {{ Auth::user()->name }}</p>
 
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+<hr>
+
+@extends('layouts.app')
+
+@section('content')
+
+<h1>Dashboard</h1>
+
+<p>Welcome to the Laboratory Information System.</p>
+
+@endsection
+
+<hr>
+
+
+
+<a href="/logout">Logout</a>

@@ -46,7 +46,7 @@ class AuthController extends Controller
     {
         return view('login');
     }
-    
+
     /*
     public function login(Request $request)
     {
@@ -80,7 +80,8 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        #return redirect('/login');
+        return redirect('/dashboard');
     }
 
 }
