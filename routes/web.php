@@ -100,3 +100,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/login',[AuthController::class,'showLogin'])->name('login');
 
 #####
+
+
+Route::get('/dashboard', function() {
+    return view('dashboard');
+})->middleware('auth'); // only logged-in users
