@@ -112,7 +112,8 @@
 
 <div class="sidebar">
     <h2>Lab Menu</h2>
-    <a href="/patients">Patients</a>
+    <a href="/patients">View Patients</a>
+    <a href="/patients/create">Add Patient</a>
     <a href="/appointments">Appointments</a>
     <a href="/reports">Reports</a>
     <a href="/settings">Settings</a>

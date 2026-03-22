@@ -1,98 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Lab System</title>
+<meta charset="UTF-8">
+<title>Lab System</title>
 
-    <style>
-        body{
-            font-family: Arial;
-            margin:0;
-        }
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    display: flex;
+    background: #f3f4f6;
+}
 
-        .header{
-            background:#333;
-            color:white;
-            padding:15px;
-        }
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #3b82f6;
+    color: white;
+    height: 100vh;
+    padding-top: 20px;
+}
 
-        .container{
-            display:flex;
-        }
+.sidebar h2 {
+    text-align: center;
+}
 
-        .sidebar{
-            width:200px;
-            background:#f4f4f4;
-            padding:15px;
-            min-height:100vh;
-        }
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+}
 
-        .sidebar a{
-            display:block;
-            padding:8px;
-            text-decoration:none;
-            color:black;
-        }
+.sidebar a:hover {
+    background: #2563eb;
+}
 
-        .sidebar a:hover{
-            background:#ddd;
-        }
+/* Main content */
+.main {
+    flex: 1;
+    padding: 30px;
+}
 
-        .content{
-            flex:1;
-            padding:20px;
-        }
-    </style>
+/* Flash message */
+.success {
+    background: #d1fae5;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
 
+/* Form inputs */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+.action-btn {
+    display: inline-flex;        /* use flex for perfect centering */
+    align-items: center;         /* vertically center text */
+    justify-content: center;     /* horizontally center text */
+    padding: 6px 15px;
+    min-width: 80px;
+    height: 36px;                /* force same height */
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    box-sizing: border-box;
+    color: white;
+}
+
+.action-edit { background-color: #10b981; }
+.action-delete { background-color: #ef4444; }
+
+.action-edit:hover { background-color: #059669; }
+.action-delete:hover { background-color: #dc2626; }
+
+/* make forms inline-flex so button doesn’t stretch */
+form.inline { display: inline-flex; margin: 0; padding: 0; } background-color: #059669; }
+
+</style>
 </head>
 
 <body>
 
-<div class="header">
-    Laboratory Information System
+<div class="sidebar">
+    <h2>Lab Menu</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="{{ route('patients.index') }}">Patients</a>
+    <a href="{{ route('patients.create') }}">Add Patient</a>
+    <a href="/logout">Logout</a>
 </div>
 
-<div class="container">
+<div class="main">
 
-    <div class="sidebar">
+    @if(session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
 
-        <p><b>{{ Auth::user()->name }}</b></p>
-
-        <a href="/dashboard">Dashboard</a>
-        <a href="/patients">Patients</a>
-        <a href="/lab-tests">Lab Tests</a>
-        <a href="/lab-orders">Lab Orders</a>
-        <a href="/results">Results</a>
-        <a href="/results">*Users</a>
-        <a href="/results">*Register Patients</a>
-        <a href="/results">*Search</a>
-        <a href="/results">*Create Order</a>
-        <a href="/results">*Medtech Dashboard</a>
-        <a href="/results">*Check In Orders</a>
-        <a href="/results">*Saved Results</a>
-        <a href="/results">*Census</a>
-        <a href="/results">*Non-Active Orders</a>
-        <a href="/results">*Deletion</a>
-        <a href="/results">*Edit</a>
-        <a href="/results">*Post Test</a>
-        <a href="/results">*Register To DB </a>
-        <a href="/results">*Medtech Sections</a>
-        <a href="/results">*Watermark</a>
-        <a href="/results">*Turn Around Time</a>
-        <a href="/results">*View Orders</a>
-        <a href="/results">*Barcodes</a>
-        <a href="/results">Generate excel</a>
-      
-        <hr>
-
-        <a href="/logout">Logout</a>
-
-    </div>
-
-    <div class="content">
-
-        @yield('content')
-
-    </div>
+    @yield('content')
 
 </div>
 

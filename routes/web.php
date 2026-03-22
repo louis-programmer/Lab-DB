@@ -105,3 +105,33 @@ Route::get('/login',[AuthController::class,'showLogin'])->name('login');
 Route::get('/dashboard', function() {
     return view('dashboard');
 })->middleware('auth'); // only logged-in users
+
+/*
+use App\Http\Controllers\PatientController;
+
+Route::get('/patients', [PatientController::class, 'index'])->middleware('auth'); // Patients
+*/
+
+# Patients #
+/*
+Ensures ALL patient routes require login
+Cleaner and scalable
+*/
+use App\Http\Controllers\PatientController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+});
+
+
+#use App\Http\Controllers\PatientController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+    Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
+    Route::post('/patients', [PatientController::class, 'store'])->name('patients.store');
+});
+
+
+
+Route::resource('patients', PatientController::class);
