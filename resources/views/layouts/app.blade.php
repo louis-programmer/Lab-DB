@@ -233,9 +233,17 @@ button {
 
 <div class="sidebar">
     <h2>Lab Menu</h2>
+
     <a href="/dashboard">Dashboard</a>
     <a href="{{ route('patients.index') }}">Patients</a>
     <a href="{{ route('patients.create') }}">Add Patient</a>
+
+    @auth
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('logs.index') }}">Activity Logs</a>
+        @endif
+    @endauth
+
     <a href="/logout">Logout</a>
 </div>
 

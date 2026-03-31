@@ -112,11 +112,18 @@
 
 <div class="sidebar">
     <h2>Lab Menu</h2>
-    <a href="/patients">View Patients</a>
-    <a href="/patients/create">Add Patient</a>
+    <a href="/patients">Patients</a>
     <a href="/appointments">Appointments</a>
     <a href="/reports">Reports</a>
     <a href="/settings">Settings</a>
+
+    @auth
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('logs.index') }}">Activity Logs</a>
+        @endif
+    @endauth
+
+
     <a href="/logout" class="logout">Logout</a>
 </div>
 

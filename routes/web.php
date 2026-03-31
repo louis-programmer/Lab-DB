@@ -1,137 +1,61 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Public Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return 'Hello, Laravel is working!';
-});
-
-Route::get('/pizzas', function () {
-    return view('pizzas');
-});
-
-
-# added
-use App\Http\Controllers\AuthController;
-
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-
-# ADDED####
-
-# Login
 /*
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth'); // <-- only logged-in users can see this
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
 */
 
-
-#Logout
-
-use Illuminate\Support\Facades\Auth;
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
 
-
-
-##### Login Addition
-
-#use App\Http\Controllers\AuthController;
-
-Route::get('/login',[AuthController::class,'showLogin']);
-Route::post('/login',[AuthController::class,'login']);
-Route::get('/logout',[AuthController::class,'logout']);
-
-#use Illuminate\Support\Facades\Auth;
-
 /*
-Route::get('/dashboard', function () {
-
-    if(!Auth::check()){
-        return redirect('/login');
-    }
-
-    return "Welcome to the dashboard";
-
-});
+|--------------------------------------------------------------------------
+| Protected Routes (Logged-in users)
+|--------------------------------------------------------------------------
 */
 
-
-/*
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', function () {
-        return "Welcome " . Auth::user()->name . " | <a href='/logout'>Logout</a>";
-    });
-
-});
-
-*/
-
-
-Route::middleware('auth')->group(function () {
-
-    Route::get('/dashboard', function () {
-        
         return view('dashboard');
     });
 
+    // Patients (ALL logged users)
+    Route::resource('patients', PatientController::class);
 });
-
-Route::get('/login',[AuthController::class,'showLogin'])->name('login');
-
-#####
-
-
-Route::get('/dashboard', function() {
-    return view('dashboard');
-})->middleware('auth'); // only logged-in users
 
 /*
-use App\Http\Controllers\PatientController;
-
-Route::get('/patients', [PatientController::class, 'index'])->middleware('auth'); // Patients
+|--------------------------------------------------------------------------
+| Admin Only Routes
+|--------------------------------------------------------------------------
 */
 
-# Patients #
-/*
-Ensures ALL patient routes require login
-Cleaner and scalable
-*/
-use App\Http\Controllers\PatientController;
+Route::middleware(['auth', 'admin'])->group(function () {
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+    Route::get('/logs', [ActivityLogController::class, 'index'])
+        ->name('logs.index');
+
 });
-
-
-#use App\Http\Controllers\PatientController;
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
-    Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create');
-    Route::post('/patients', [PatientController::class, 'store'])->name('patients.store');
-});
-
-
-
-Route::resource('patients', PatientController::class);
