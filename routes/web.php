@@ -36,12 +36,12 @@ Route::post('/logout', function () {
 | Protected Routes (Logged-in users)
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth'])->group(function () {
 
+    // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
-    });
+    })->name('dashboard'); // ✅ add a name
 
     // Patients (ALL logged users)
     Route::resource('patients', PatientController::class);
@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'admin'])->group(function () {
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/logs', [ActivityLogController::class, 'index'])
         ->name('logs.index');

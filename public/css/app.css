@@ -1,0 +1,261 @@
+/* =========================
+   BASE / RESET
+========================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f3f4f6;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    width: 220px;
+    background: #3b82f6;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    transition: background 0.2s;
+}
+
+.sidebar a:hover {
+    background: #2563eb;
+}
+
+.logout {
+    margin-top: auto;
+    margin-bottom: 20px;
+    background: #ef4444;
+    text-align: center;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.logout:hover {
+    background: #b91c1c;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+/* Dashboard cards (small) */
+.dashboard-card {
+    background: #ffffff;
+    width: 200px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Form/Table cards (big) */
+.card {
+    background: #fff;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   TABLES
+========================= */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #3b82f6;
+    color: white;
+    text-align: left;
+}
+
+.table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+/* Variants */
+.button-primary {
+    background-color: #10b981;
+}
+
+.button-primary:hover {
+    background-color: #059669;
+}
+
+.button-danger {
+    background-color: #ef4444;
+}
+
+.button-danger:hover {
+    background-color: #b91c1c;
+}
+
+.button-secondary {
+    background-color: #6b7280; /* gray */
+}
+
+.button-secondary:hover {
+    background-color: #4b5563;
+}
+
+.button-outline {
+    background: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+}
+
+.button-outline:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+/* =========================
+   FORMS
+========================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Actions */
+.form-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Errors */
+.error {
+    color: #ef4444;
+    font-size: 12px;
+}
+
+/* =========================
+   LINKS
+========================= */
+a.stylish-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a.stylish-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .sidebar a, .logout {
+        flex: 1;
+        text-align: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

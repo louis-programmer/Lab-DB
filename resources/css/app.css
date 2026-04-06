@@ -1,0 +1,91 @@
+/* Universal Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #3b82f6;
+    color: white;
+    text-align: left;
+}
+
+.table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.button-primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.button-primary:hover {
+    background-color: #2563eb;
+}
+
+.button-danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.button-danger:hover {
+    background-color: #b91c1c;
+}
+
+/* Links */
+a.stylish-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a.stylish-link:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* Cards */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    width: 100%; /* ✅ full width now */
+    max-width: 900px; /* optional for nice form width */
+    margin: 0 auto; /* center */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+
+
+.logo-link {
+    color: white;
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    text-decoration: underline;
+}
