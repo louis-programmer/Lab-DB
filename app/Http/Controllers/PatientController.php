@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
-use App\Models\ActivityLog; // ✅ moved here
+use App\Models\ActivityLog;
 
 class PatientController extends Controller
 {
@@ -24,28 +24,31 @@ class PatientController extends Controller
         return view('patients.create');
     }
 
-   public function store(Request $request)
-{
-    $validated = $request->validate([
-        'first_name' => 'required|string|max:255',
-        'middle_name' => 'nullable|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'birthday' => 'required|date',
-        'gender' => 'required|string|max:20',
-        'address' => 'required|string|max:500',
-        'contact_number' => 'required|string|max:20',
-        'nationality' => 'required|string|max:100',
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'birthday' => 'required|date',
+            'gender' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
+            'contact_number' => 'required|string|max:20',
+            'nationality' => 'required|string|max:100',
+        ]);
 
-    $validated['patient_id'] = 'P' . now()->format('Ymd') . rand(1000,9999);
+        $validated['patient_id'] = 'P' . now()->format('Ymd') . rand(1000,9999);
 
-    $patient = Patient::create($validated);
+        $patient = Patient::create($validated);
 
-    // ✅ ONLY THIS
-    logActivity('Added Patient', 'Patient ID: ' . $patient->patient_id);
+        // Update search index
+        $patient->updateSearchIndex();
 
-    return redirect()->route('patients.index')->with('success', 'Patient added!');
-}
+        // Activity log
+        logActivity('Added Patient', 'Patient ID: ' . $patient->patient_id);
+
+        return redirect()->route('patients.index')->with('success', 'Patient added!');
+    }
 
     public function edit($id)
     {
@@ -54,42 +57,42 @@ class PatientController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $patient = Patient::findOrFail($id);
+    {
+        $patient = Patient::findOrFail($id);
 
-    $validated = $request->validate([
-        'first_name' => 'required|string|max:255',
-        'middle_name' => 'nullable|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'birthday' => 'required|date',
-        'gender' => 'required|string|max:20',
-        'address' => 'required|string|max:500',
-        'contact_number' => 'required|string|max:20',
-        'nationality' => 'required|string|max:100',
-    ]);
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'birthday' => 'required|date',
+            'gender' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
+            'contact_number' => 'required|string|max:20',
+            'nationality' => 'required|string|max:100',
+        ]);
 
-    $patient->update($validated);
+        $patient->update($validated);
 
-    // ✅ ONLY THIS
-    logActivity('Updated Patient', 'Patient ID: ' . $patient->patient_id);
+        // Update search index
+        $patient->updateSearchIndex();
 
-    return redirect()->route('patients.index')->with('success', 'Patient updated!');
-}
+        // Activity log
+        logActivity('Updated Patient', 'Patient ID: ' . $patient->patient_id);
 
+        return redirect()->route('patients.index')->with('success', 'Patient updated!');
+    }
 
     public function destroy($id)
-{
-    $patient = Patient::findOrFail($id);
+    {
+        $patient = Patient::findOrFail($id);
 
-    $patientId = $patient->patient_id;
+        $patientId = $patient->patient_id;
 
-    $patient->delete();
+        $patient->delete();
 
-    // ✅ ONLY THIS
-    logActivity('Deleted Patient', 'Patient ID: ' . $patientId);
+        // Activity log
+        logActivity('Deleted Patient', 'Patient ID: ' . $patientId);
 
-    return redirect()->route('patients.index')->with('success', 'Patient deleted!');
-}
-
-
+        return redirect()->route('patients.index')->with('success', 'Patient deleted!');
+    }
 }

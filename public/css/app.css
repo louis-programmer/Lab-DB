@@ -74,19 +74,30 @@ body {
 /* Dashboard cards (small) */
 .dashboard-card {
     background: #ffffff;
-    width: 200px;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.2s;
-    cursor: pointer;
+    padding: 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #111827;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.dashboard-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+}
+
+.dashboard-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
 }
 
 .dashboard-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
 }
-
 /* Form/Table cards (big) */
 .card {
     background: #fff;
@@ -98,6 +109,12 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -105,9 +122,61 @@ body {
     margin-bottom: 20px;
 }
 
+
+
+
+
 /* =========================
    TABLES
 ========================= */
+.row-odd {
+    background-color: #e6e6e6;
+}
+
+.row-even {
+    background-color: #f2f2f2;
+
+}
+
+.log-row {
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+.action-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.action-added {
+    background: #d4edda;
+}
+
+.action-updated {
+    background: #fff3cd;
+}
+
+.action-deleted {
+    background: #f8d7da;
+}
+
+.action-default {
+    background: #e3f2fd;
+}
+
+
+.table tr:hover {
+    background-color: #eef2ff;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #f5f5f5;
+}
+
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -127,10 +196,10 @@ body {
     text-align: left;
 }
 
-.table tr:hover {
-    background-color: #f1f5f9;
+.table tbody tr:hover {
+    background-color: #e0edff;
+    box-shadow: inset 3px 0 0 #3b82f6; /* left highlight line */
 }
-
 /* =========================
    BUTTONS
 ========================= */

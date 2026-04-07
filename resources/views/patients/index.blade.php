@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
 
-    <h2>Patients</h2>
+     <div class="card-header">
+            <h2 style="margin-bottom:20px;"> Patients</h2>
+            <a href="{{ route('dashboard') }}" class="button button-outline">← Back</a>      
+          </div>
+
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
         <a href="{{ route('patients.create') }}" class="button button-primary">
@@ -24,7 +28,7 @@
 
         <tbody>
         @foreach($patients as $patient)
-            <tr>
+           <tr class="{{ $loop->even ? 'row-even' : 'row-odd' }}">
                 <td>{{ $patient->patient_id }}</td>
                 <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
                 <td>{{ $patient->birthday }}</td>

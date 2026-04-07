@@ -7,7 +7,8 @@
 
         <div class="card-header">
             <h2>{{ isset($patient) ? 'Edit Patient' : 'Add Patient' }}</h2>
-            <a href="{{ route('patients.index') }}" class="button button-outline">← Back</a>        </div>
+            <a href="{{ route('patients.index') }}" class="button button-outline">← Back</a>      
+          </div>
 
         <form method="POST" 
               action="{{ isset($patient) ? route('patients.update', $patient->id) : route('patients.store') }}">
@@ -67,7 +68,7 @@
                 <!-- Contact -->
                 <div class="form-group">
                     <label>Contact Number *</label>
-                    <input type="text" name="contact_number"
+                    <input type="number" name="contact_number"
                         value="{{ old('contact_number', $patient->contact_number ?? '') }}" required>
                 </div>
 

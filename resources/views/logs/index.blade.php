@@ -4,6 +4,20 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+
+/* Smooth hover effect */
+tbody tr {
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #e0edff;
+}
+
+/* Optional: subtle left highlight */
+tbody tr:hover {
+    box-shadow: inset 3px 0 0 #3b82f6;
+}
 </style>
 @endpush
 
@@ -15,9 +29,14 @@ table {
 
     <div style="background:white; padding:25px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
 
-        <h2 style="margin-bottom:20px;">Activity Logs</h2>
+        
 
-        <table style="width:100%; border-collapse:collapse;">
+         <div class="card-header">
+            <h2 style="margin-bottom:20px;">Activity Logs</h2>
+            <a href="{{ route('dashboard') }}" class="button button-outline">← Back</a>      
+          </div>
+
+        <table class="table">
             <thead>
                 <tr style="background:#f5f5f5;">
                     <th style="padding:10px;">User</th>
@@ -29,8 +48,8 @@ table {
             </thead>
 
             <tbody>
-                @forelse($logs as $log)
-                    <tr style="border-top:1px solid #ddd; text-align:center;">
+               @forelse($logs as $log)
+                <tr class="{{ $loop->even ? 'row-even' : 'row-odd' }}">
                         <td style="padding:10px;">
                             {{ $log->user->name ?? 'N/A' }}
                         </td>
@@ -38,17 +57,19 @@ table {
                         <td style="padding:10px;">
                             <span style="padding:5px 10px; border-radius:5px; background:#e3f2fd;">
                                 @php
-                                    $color = match(true) {
-                                        str_contains($log->action, 'Added') => '#d4edda',
-                                        str_contains($log->action, 'Updated') => '#fff3cd',
-                                        str_contains($log->action, 'Deleted') => '#f8d7da',
-                                        default => '#e3f2fd'
+                                    $class = match(true) {
+                                        str_contains($log->action, 'Added') => 'action-added',
+                                        str_contains($log->action, 'Updated') => 'action-updated',
+                                        str_contains($log->action, 'Deleted') => 'action-deleted',
+                                        default => 'action-default'
                                     };
                                 @endphp
 
-                                <span style="padding:5px 10px; border-radius:5px; background:{{ $color }};">
+                                <span class="action-badge {{ $class }}">
                                     {{ $log->action }}
                                 </span>
+
+
                             </span>
                         </td>
 
