@@ -200,6 +200,21 @@ thead th {
     background-color: #e0edff;
     box-shadow: inset 3px 0 0 #3b82f6; /* left highlight line */
 }
+
+/*
+action cards
+*/
+.action-badge {
+    display: inline-block;
+    width: 120px;        /* fixed width */
+    text-align: center;  /* center text */
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+
+
 /* =========================
    BUTTONS
 ========================= */
@@ -327,4 +342,23 @@ a.stylish-link:hover {
     .form-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+.action-added {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+.action-updated {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+.action-deleted {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+.action-default {
+    background-color: #e5e7eb;
+    color: #374151;
 }

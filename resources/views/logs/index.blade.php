@@ -1,22 +1,30 @@
 @push('styles')
 <style>
-table {
-    width: 100%;
-    border-collapse: collapse;
+.action-badge {
+    display: inline-block;
+    width: 140px;        /* 👈 fixed width */
+    text-align: center;  /* center text */
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 500;
 }
 
-/* Smooth hover effect */
-tbody tr {
-    transition: background 0.2s ease, color 0.2s ease;
+/* Colors */
+.action-added {
+    background-color: #d1fae5;
+    color: #065f46;
 }
-
-tbody tr:hover {
-    background-color: #e0edff;
+.action-updated {
+    background-color: #fef3c7;
+    color: #92400e;
 }
-
-/* Optional: subtle left highlight */
-tbody tr:hover {
-    box-shadow: inset 3px 0 0 #3b82f6;
+.action-deleted {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+.action-default {
+    background-color: #e5e7eb;
+    color: #374151;
 }
 </style>
 @endpush
@@ -36,8 +44,54 @@ tbody tr:hover {
             <a href="{{ route('dashboard') }}" class="button button-outline">← Back</a>      
           </div>
 
+
+       <form method="GET" 
+      style="margin-bottom:20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+
+    <!-- Action -->
+    <select name="action" style="padding:6px; border-radius:5px;">
+        <option value="">All Actions</option>
+        @foreach($actions as $action)
+            <option value="{{ $action }}" 
+                {{ request('action') == $action ? 'selected' : '' }}>
+                {{ $action }}
+            </option>
+        @endforeach
+    </select>
+
+    <!-- User -->
+    <select name="user_id" style="padding:6px; border-radius:5px;">
+        <option value="">All Users</option>
+        @foreach($users as $user)
+            <option value="{{ $user->id }}" 
+                {{ request('user_id') == $user->id ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+
+    <!-- Date From -->
+    <input type="date" name="from_date" 
+        value="{{ request('from_date') }}"
+        style="padding:6px; border-radius:5px;" />
+
+    <!-- Date To -->
+    <input type="date" name="to_date" 
+        value="{{ request('to_date') }}"
+        style="padding:6px; border-radius:5px;" />
+
+    <!-- Buttons -->
+    <button type="submit" class="button">Filter</button>
+
+    <a href="{{ route('logs.index') }}" class="button button-outline">
+        Reset
+    </a>
+
+</form>
+
         <table class="table">
             <thead>
+                
                 <tr style="background:#f5f5f5;">
                     <th style="padding:10px;">User</th>
                     <th style="padding:10px;">Action</th>
@@ -45,6 +99,7 @@ tbody tr:hover {
                     <th style="padding:10px;">IP</th>
                     <th style="padding:10px;">Date</th>
                 </tr>
+                </center>
             </thead>
 
             <tbody>
@@ -55,21 +110,17 @@ tbody tr:hover {
                         </td>
 
                         <td style="padding:10px;">
-                            <span style="padding:5px 10px; border-radius:5px; background:#e3f2fd;">
-                                @php
-                                    $class = match(true) {
-                                        str_contains($log->action, 'Added') => 'action-added',
-                                        str_contains($log->action, 'Updated') => 'action-updated',
-                                        str_contains($log->action, 'Deleted') => 'action-deleted',
-                                        default => 'action-default'
-                                    };
-                                @endphp
+                            @php
+                                $class = match(true) {
+                                    str_contains($log->action, 'Added') => 'action-added',
+                                    str_contains($log->action, 'Updated') => 'action-updated',
+                                    str_contains($log->action, 'Deleted') => 'action-deleted',
+                                    default => 'action-default'
+                                };
+                            @endphp
 
-                                <span class="action-badge {{ $class }}">
-                                    {{ $log->action }}
-                                </span>
-
-
+                            <span class="action-badge {{ $class }}">
+                                {{ $log->action }}
                             </span>
                         </td>
 
@@ -94,8 +145,8 @@ tbody tr:hover {
         </table>
 
         <div style="margin-top:20px;">
-            {{ $logs->links() }}
-        </div>
+    {{ $logs->onEachSide(1)->links('pagination::simple-bootstrap-4') }}
+</div>
 
     </div>
 
