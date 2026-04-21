@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\ActivityLog;
-
+/// april 21
 class PatientController extends Controller
 {
     public function __construct()
@@ -13,12 +13,28 @@ class PatientController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        $patients = Patient::paginate(10);
-        return view('patients.index', compact('patients'));
-    }
+     public function index(Request $request)
+        {
+            if ($request->search) {
 
+                $terms = explode(' ', strtolower(trim($request->search)));
+
+                $patientIds = \App\Models\PatientSearchIndex::where(function ($query) use ($terms) {
+
+                    foreach ($terms as $term) {
+                        $query->where('search_text', 'like', "%{$term}%");
+                    }
+
+                })->pluck('patient_id');
+
+                $patients = Patient::whereIn('id', $patientIds)->paginate(10);
+
+            } else {
+                $patients = Patient::paginate(10);
+            }
+
+            return view('patients.index', compact('patients'));
+        }
     public function create()
     {
         return view('patients.create');

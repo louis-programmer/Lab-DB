@@ -26,10 +26,7 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/login');
-})->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------

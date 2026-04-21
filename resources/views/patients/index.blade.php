@@ -15,6 +15,16 @@
         </a>
     </div>
 
+
+        <form method="GET" style="margin-bottom:15px;">
+            <input type="text" name="search" 
+                placeholder="Search patient..."
+                value="{{ request('search') }}"
+                style="padding:6px; border-radius:5px; border:1px solid #ccc;" />
+
+            <button type="submit" class="button">Search</button>
+        </form>
+
     <table class="table">
         <thead>
             <tr>
